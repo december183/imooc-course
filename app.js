@@ -15,7 +15,7 @@ console.log('app is running on port ' + port);
 // index page
 app.get('/', function(req, res) {
 	res.render('index', {
-		title: 'imooc 首页'
+		title: 'imooc 电影网站首页'
 	});
 })
 
