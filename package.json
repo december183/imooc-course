@@ -1,0 +1,27 @@
+{
+  "name": "imooc",
+  "version": "1.0.0",
+  "description": "imooc course",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/december183/imooc-course.git"
+  },
+  "keywords": [
+    "imooc",
+    "course"
+  ],
+  "author": "december183",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/december183/imooc-course/issues"
+  },
+  "homepage": "https://github.com/december183/imooc-course#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "path": "^0.12.7"
+  }
+}
