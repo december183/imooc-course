@@ -47,6 +47,21 @@ app.get('/admin/list', function(req, res) {
 	});
 })
 
+// list delete page
+app.delete('/admin/list', function(req, res) {
+	var id = req.query.id;
+	
+	if(id) {
+		Movie.remove({_id: id}, function(err, movie) {
+			if(err) {
+				console.log(err);
+			} else {
+				res.json({success: 1});
+			}
+		});
+	}
+})
+
 // detail page
 app.get('/movie/:id', function(req, res) {
 	var id = req.params.id;
