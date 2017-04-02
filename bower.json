@@ -1,0 +1,26 @@
+{
+  "name": "imooc",
+  "description": "imooc course",
+  "main": "app.js",
+  "authors": [
+    "december183"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "imooc",
+    "course"
+  ],
+  "homepage": "https://github.com/december183/imooc-course",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
