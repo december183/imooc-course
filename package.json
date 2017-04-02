@@ -21,8 +21,12 @@
   },
   "homepage": "https://github.com/december183/imooc-course#readme",
   "dependencies": {
+    "body-parser": "^1.17.1",
     "express": "^4.15.2",
+    "moment": "^2.18.1",
+    "mongoose": "^4.9.2",
     "path": "^0.12.7",
-    "pug": "^2.0.0-beta11"
+    "pug": "^2.0.0-beta11",
+    "underscore": "^1.8.3"
   }
 }
