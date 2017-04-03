@@ -4,6 +4,7 @@ var path = require('path');
 var mongoose = require('mongoose');
 var _ = require('underscore');
 var Movie = require('./models/movie');
+var User = require('./models/user');
 var port = process.env.port || 3000;
 
 var app = express();
@@ -50,7 +51,7 @@ app.get('/admin/list', function(req, res) {
 // list delete page
 app.delete('/admin/list', function(req, res) {
 	var id = req.query.id;
-	
+
 	if(id) {
 		Movie.remove({_id: id}, function(err, movie) {
 			if(err) {
@@ -79,7 +80,7 @@ app.get('/movie/:id', function(req, res) {
 })
 
 // admin page
-app.get('/admin/movie', function(req, res) {
+app.get('/admin/new', function(req, res) {
 	res.render('admin', {
 		title: 'imooc 后台录入页',
 		movie: {
@@ -151,3 +152,46 @@ app.post('/admin/movie/new', function(req, res) {
 		});
 	}
 });
+
+// signup page
+app.post('/user/signup', function(req, res) {
+	var _user = req.body.user;
+	var checkPass = req.body.checkPass;
+	// console.log(_user);	
+	// console.log(checkPass);
+	if(_user.password != checkPass) {
+		console.log('密码与密码确认不一致');
+		return res.redirect('/');
+	} else {
+		User.find({name: _user.name}, function(err, user) {
+			if(err) {
+				console.log(err);
+			} 
+			// console.log(user);
+			if(user.length > 0) {
+				return res.redirect('/');
+			} else {
+				var user = new User(_user);
+				user.save(_user, function(err, user) {
+					if(err) {
+						console.log(err);
+					}
+					res.redirect('/admin/userlist');
+				});	
+			}
+		});
+	}
+})
+
+// userlist page
+app.get('/admin/userlist', function(err, res) {
+	User.fetch(function(err, users) {
+		if(err) {
+			console.log(err);
+		}
+		res.render('userlist', {
+			title: 'imooc 用户列表页',
+			users: users
+		});
+	});
+})
