@@ -12,7 +12,7 @@ var dbUrl = 'mongodb://localhost/imooc';
 var app = express();
 
 mongoose.connect(dbUrl);
-app.set('views', path.join(__dirname, 'views/pages'));
+app.set('views', path.join(__dirname, 'app/views/pages'));
 app.set('view engine', 'pug');
 
 app.locals.moment = require('moment');
@@ -30,13 +30,6 @@ app.use(session({
 	resave: false,
 	saveUninitialized: true
 }));
-app.use(function(req, res, next) {
-	var _user = req.session.user;
-	if(_user){
-		app.locals.user = _user;
-	}
-	next();
-});
 if(app.get('env') === 'development') {
 	app.set('showStackError', true);
 	app.use(morgan(':method:url:status'));
