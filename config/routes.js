@@ -16,17 +16,19 @@ module.exports = function(app) {
 	app.get('/', Index.index);
 
 	// Movie
-	app.get('/admin/list', Movie.list);
-	app.delete('/admin/list', Movie.del);
+	app.get('/admin/movie/list', User.loginRequired, User.adminRequired, Movie.list);
+	app.delete('/admin/movie/list', User.loginRequired, User.adminRequired, Movie.del);
 	app.get('/movie/:id', Movie.detail);
-	app.get('/admin/new', Movie.new);
-	app.get('/admin/update/:id', Movie.update);
-	app.post('/admin/movie/new', Movie.save);
+	app.get('/admin/movie/new', User.loginRequired, User.adminRequired, Movie.new);
+	app.get('/admin/movie/update/:id', User.loginRequired, User.adminRequired, Movie.update);
+	app.post('/admin/movie/save', User.loginRequired, User.adminRequired, Movie.save);
 
 	// User
-	app.post('/user/signup', User.signup);
-	app.post('/user/signin', User.signin);
+	app.get('/signup', User.signup);
+	app.post('/user/signup', User.userSignup);
+	app.get('/signin', User.signin);
+	app.post('/user/signin', User.userSignin);
 	app.get('/logout', User.logout);
-	app.get('/admin/userlist', User.list);
+	app.get('/admin/user/list', User.loginRequired, User.adminRequired, User.list);
 }
 

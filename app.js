@@ -32,7 +32,7 @@ app.use(session({
 }));
 if(app.get('env') === 'development') {
 	app.set('showStackError', true);
-	app.use(morgan(':method:url:status'));
+	app.use(morgan(':method :url :status'));
 	app.locals.pretty = true;
 	mongoose.set('debug', true);
 }

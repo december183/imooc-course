@@ -1,0 +1,18 @@
+extends ../layout
+block content
+	.container
+		.row
+			.col-lg-3
+			.col-lg-6
+				form(method="post", action="/user/signup")
+					.form-group
+						label(for="signinName") 用户名
+						input#signinName.form-control(type="text", name="user['name']")
+					.form-group
+						label(for="signinPassword") 密码
+						input#signinPassword.form-control(type="password", name="user['password']")
+					.form-group
+						label(for="checkPass") 确认密码
+						input#checkPass.form-control(type="password", name="checkPass")
+					button.btn.btn-success(type="submit") 提交
+			.col-lg-3
