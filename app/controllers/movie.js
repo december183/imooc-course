@@ -1,4 +1,5 @@
 var Movie = require('../models/movie');
+var Comment = require('../models/comment');
 var _ = require('underscore');
 
 // list movie page
@@ -36,10 +37,16 @@ exports.detail = function(req, res) {
 		if(err) {
 			console.log(err);
 		} else {
-			res.render('detail', {
-				title: 'imooc ' + movie.title,
-				movie: movie
-			});
+			Comment.find({movie: id})
+			.populate('from', 'name')
+			.populate('reply.from reply.to', 'name')
+			.exec(function(err, comments) {
+				res.render('detail', {
+					title: 'imooc ' + movie.title,
+					movie: movie,
+					comments: comments
+				});
+			})
 		}
 	});
 	
