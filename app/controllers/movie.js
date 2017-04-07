@@ -40,7 +40,6 @@ exports.detail = function(req, res) {
 			Comment.find({movie: id})
 			.populate('from', 'name')
 			.populate('reply.from reply.to', 'name')
-<<<<<<< HEAD
 			.exec(function(err, comments) {
 				res.render('detail', {
 					title: 'imooc ' + movie.title,
@@ -48,21 +47,9 @@ exports.detail = function(req, res) {
 					comments: comments
 				});
 			})
-=======
-			.exec(function(err, comments){
-				if(err) {
-					console.log(err);
-				} else{
-					res.render('detail', {
-						title: 'imooc ' + movie.title,
-						movie: movie,
-						comments: comments
-					});
-				}
-			});
->>>>>>> 32d8403c57fbfb38cf4dc1b55ee87c348e5d4ca4
 		}
 	});
+	
 }
 
 // admin new movie page
