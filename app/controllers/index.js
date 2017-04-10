@@ -22,29 +22,49 @@ exports.index = function(req, res) {
 
 exports.search = function(req, res) {
 	var catId = req.query.cat;
+	var q = req.query.q;
 	var page = parseInt(req.query.p, 10) || 1;
 	var count = 2;
 	var index = (page-1)*count;
-	Category.find({_id: catId})
-	.populate({
-		path: 'movies',
-		select: 'title poster'
-	})
-	.exec(function(err, categories) {
-		if(err) {
-			console.log(err);
-		}
-		console.log(categories);
-		var category = categories[0] || {};
-		var movies = category.movies || {};
-		var result = movies.slice(index, index + count);
-		res.render('result', {
-			title: 'imooc 结果列表页',
-			keyword: category.name,
-			currentPage: page,
-			totalPage: Math.ceil(movies.length / count),
-			movies: result,
-			query: 'cat=' + catId
+	if(catId) {
+		Category.find({_id: catId})
+		.populate({
+			path: 'movies',
+			select: 'title poster'
 		})
-	})
+		.exec(function(err, categories) {
+			if(err) {
+				console.log(err);
+			}
+			// console.log(categories);
+			var category = categories[0] || {};
+			var movies = category.movies || {};
+			var result = movies.slice(index, index + count);
+			res.render('result', {
+				title: 'imooc 结果列表页',
+				keyword: category.name,
+				currentPage: page,
+				totalPage: Math.ceil(movies.length / count),
+				movies: result,
+				query: 'cat=' + catId
+			})
+		})
+	} else {
+		Movie.find({title: {$regex: q + '.*', $options: '$i'}})
+		.exec(function(err, movies) {
+			if(err) {
+				console.log(err);
+			}
+			var result = movies.slice(index, index + count);
+			res.render('result', {
+				title: 'imooc 结果列表页',
+				keyword: q,
+				currentPage: page,
+				totalPage: Math.ceil(movies.length / count),
+				movies: result,
+				query: 'q=' + q
+			})
+		})
+	}
+	
 }
