@@ -3,6 +3,8 @@ var Movie = require('../app/controllers/movie');
 var User = require('../app/controllers/user');
 var Comment = require('../app/controllers/comment');
 var Category = require('../app/controllers/category');
+var multer = require('../app/util/multer');
+
 
 module.exports = function(app) {
 
@@ -23,7 +25,7 @@ module.exports = function(app) {
 	app.get('/movie/:id', Movie.detail);
 	app.get('/admin/movie/new', User.loginRequired, User.adminRequired, Movie.new);
 	app.get('/admin/movie/update/:id', User.loginRequired, User.adminRequired, Movie.update);
-	app.post('/admin/movie/save', User.loginRequired, User.adminRequired, Movie.save);
+	app.post('/admin/movie/save', User.loginRequired, User.adminRequired, multer.single('uploadPoster'), Movie.save);
 
 	// User
 	app.get('/signup', User.signup);

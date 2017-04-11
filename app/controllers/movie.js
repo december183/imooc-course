@@ -5,15 +5,6 @@ var _ = require('underscore');
 
 // list movie page
 exports.list = function(req, res) {
-	/*Movie.fetch(function(err, movies) {
-		if(err) {
-			console.log(err);
-		}
-		res.render('list', {
-			title: 'imooc 列表页',
-			movies: movies
-		});
-	});*/
 	Movie.find({})
 	.populate('category', 'name')
 	.exec(function(err, movies) {
@@ -45,6 +36,11 @@ exports.del = function(req, res) {
 // detail movie page
 exports.detail = function(req, res) {
 	var id = req.params.id;
+	Movie.update({_id: id}, {$inc: {pv: 1}}, function(err) {
+		if(err) {
+			console.log(err);
+		}
+	});
 	Movie.findById(id, function(err, movie) {
 		if(err) {
 			console.log(err);
@@ -99,6 +95,11 @@ exports.update = function(req, res) {
 exports.save = function(req, res) {
 	var id = req.body.movie._id;
 	var movieObj = req.body.movie;
+	var posterData = req.file;
+	// console.log(posterData);
+	if(posterData) {
+		movieObj.poster = posterData.path.substr(6);
+	}
 	var _movie;
 	if(id) {
 		Movie.findById(id, function(err, movie) {
